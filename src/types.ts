@@ -1,0 +1,39 @@
+export interface EnvVar {
+  key: string;
+  value: string;
+  required: boolean;
+  type?: 'string' | 'number' | 'boolean' | 'url' | 'email';
+  description?: string;
+}
+
+export interface ValidationResult {
+  isValid: boolean;
+  errors: ValidationError[];
+  warnings: ValidationWarning[];
+}
+
+export interface ValidationError {
+  key: string;
+  message: string;
+  type: 'missing' | 'invalid' | 'type_mismatch';
+}
+
+export interface ValidationWarning {
+  key: string;
+  message: string;
+  type: 'extra' | 'deprecated';
+}
+
+export interface CheckOptions {
+  file: string;
+  example: string;
+}
+
+export interface FixOptions extends CheckOptions {
+  interactive: boolean;
+}
+
+export interface EnvFile {
+  path: string;
+  variables: EnvVar[];
+}

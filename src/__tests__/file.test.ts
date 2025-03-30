@@ -45,12 +45,18 @@ DEBUG_MODE=false`;
   describe('readEnvFile', () => {
     it('should read and parse env file correctly', async () => {
       const result = await readEnvFile('.env');
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         path: '.env',
         variables: mockVariables.map(({ type, ...rest }) => rest),
       });
-      expect(mockedFs.pathExists).toHaveBeenCalledWith('.env');
-      expect(mockedFs.readFile).toHaveBeenCalledWith('.env', 'utf-8');
+      expect(result.lines).toEqual(mockEnvContent.split('\n'));
+      expect(mockedFs.pathExists).toHaveBeenCalledWith(
+        expect.stringContaining('.env')
+      );
+      expect(mockedFs.readFile).toHaveBeenCalledWith(
+        expect.stringContaining('.env'),
+        'utf-8'
+      );
     });
 
     it('should throw error if file does not exist', async () => {
@@ -75,8 +81,23 @@ DEBUG_MODE=false`;
       mockedFs.writeFile.mockImplementation(async () => {});
       await writeEnvFile('.env', mockVariables);
       expect(mockedFs.writeFile).toHaveBeenCalledWith(
-        '.env',
+        expect.stringContaining('.env'),
         mockEnvContent,
+        'utf-8'
+      );
+    });
+
+    it('should write env file with example formatting', async () => {
+      mockedFs.writeFile.mockImplementation(async () => {});
+      mockedFs.readFile.mockImplementation(async () => mockEnvContent);
+      await writeEnvFile('.env', mockVariables, '.env.example');
+      expect(mockedFs.writeFile).toHaveBeenCalledWith(
+        expect.stringContaining('.env'),
+        mockEnvContent,
+        'utf-8'
+      );
+      expect(mockedFs.readFile).toHaveBeenCalledWith(
+        expect.stringContaining('.env.example'),
         'utf-8'
       );
     });

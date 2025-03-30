@@ -30,7 +30,7 @@ program
   .action(options => {
     fix({
       file: options.path,
-      example: options.example || options.path.replace('.env', '.env.example'),
+      example: options.example || '.env.example',
       interactive: !options.yes,
       force: options.force,
     });

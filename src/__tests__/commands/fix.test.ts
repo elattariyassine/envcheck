@@ -34,7 +34,9 @@ describe('fix command', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (readEnvFile as jest.Mock).mockResolvedValue(mockEnvFile);
+    (readEnvFile as jest.Mock)
+      .mockImplementationOnce(() => Promise.resolve(mockEnvFile))
+      .mockImplementationOnce(() => Promise.resolve(mockExampleFile));
     (writeEnvFile as jest.Mock).mockResolvedValue(undefined);
     (mergeEnvFiles as jest.Mock).mockImplementation((env, example) => ({
       variables: [
@@ -58,7 +60,11 @@ describe('fix command', () => {
     await fix({ file: '.env', example: '.env.example', interactive: false });
 
     expect(readEnvFile).toHaveBeenCalledTimes(2);
-    expect(writeEnvFile).not.toHaveBeenCalled();
+    expect(writeEnvFile).toHaveBeenCalledWith(
+      '.env',
+      expect.any(Array),
+      '.env.example'
+    );
   });
 
   it('should handle missing variables in interactive mode', async () => {
@@ -145,9 +151,9 @@ describe('fix command', () => {
   });
 
   it('should handle file read errors', async () => {
-    (readEnvFile as jest.Mock).mockRejectedValueOnce(
-      new Error('File not found')
-    );
+    (readEnvFile as jest.Mock)
+      .mockReset()
+      .mockRejectedValueOnce(new Error('File not found'));
 
     await expect(
       fix({ file: '.env', example: '.env.example', interactive: false })
@@ -167,9 +173,9 @@ describe('fix command', () => {
       warnings: [],
     });
 
-    (writeEnvFile as jest.Mock).mockRejectedValueOnce(
-      new Error('Write failed')
-    );
+    (writeEnvFile as jest.Mock)
+      .mockReset()
+      .mockRejectedValueOnce(new Error('Write failed'));
 
     await expect(
       fix({ file: '.env', example: '.env.example', interactive: false })
@@ -192,7 +198,11 @@ describe('fix command', () => {
     await fix({ file: '.env', example: '.env.example', interactive: true });
 
     expect(inquirer.prompt).not.toHaveBeenCalled();
-    expect(writeEnvFile).toHaveBeenCalled();
+    expect(writeEnvFile).toHaveBeenCalledWith(
+      '.env',
+      expect.any(Array),
+      '.env.example'
+    );
   });
 
   it('should handle merge errors', async () => {

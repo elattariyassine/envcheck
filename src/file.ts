@@ -33,7 +33,7 @@ export async function readEnvFile(filePath: string): Promise<EnvFile> {
     });
 
     return {
-      path: absolutePath,
+      path: filePath, // Return the original path as provided
       variables,
       lines, // Store original lines for formatting preservation
     };
@@ -47,10 +47,11 @@ export async function readEnvFile(filePath: string): Promise<EnvFile> {
 
 export async function writeEnvFile(
   filePath: string,
-  variables: EnvVar[]
+  variables: EnvVar[],
+  examplePath?: string
 ): Promise<void> {
   try {
-    // Resolve the file path to an absolute path
+    // Resolve the file paths to absolute paths
     const absolutePath = path.resolve(process.cwd(), filePath);
 
     // Create a map to handle duplicate keys, keeping the last value
@@ -59,50 +60,47 @@ export async function writeEnvFile(
       uniqueVariables.set(variable.key, variable);
     });
 
-    // Read the example file to get its formatting
-    const examplePath = absolutePath.replace('.env', '.env.example');
-    const exampleContent = await fs.readFile(examplePath, 'utf-8');
-    const exampleLines = exampleContent.split('\n');
+    let outputLines: string[];
 
-    // Create a map of key to line index in the example file
-    const keyToLineIndex = new Map<string, number>();
-    exampleLines.forEach((line, index) => {
-      const trimmedLine = line.trim();
-      if (trimmedLine && !trimmedLine.startsWith('#')) {
-        const [key] = trimmedLine.split('=');
-        if (key) {
-          keyToLineIndex.set(key.trim(), index);
-        }
-      }
-    });
+    if (examplePath) {
+      // If example path is provided, use its formatting
+      const absoluteExamplePath = path.resolve(process.cwd(), examplePath);
+      const exampleContent = await fs.readFile(absoluteExamplePath, 'utf-8');
+      const exampleLines = exampleContent.split('\n');
 
-    // Build the output content by following the example file's structure exactly
-    const outputLines = exampleLines.map((line, index) => {
-      const trimmedLine = line.trim();
+      // Build the output content by following the example file's structure exactly
+      outputLines = exampleLines.map((line, index) => {
+        const trimmedLine = line.trim();
 
-      // If it's a comment or empty line, keep it as is
-      if (!trimmedLine || trimmedLine.startsWith('#')) {
-        return line;
-      }
-
-      // If it's a variable line
-      const [key] = trimmedLine.split('=');
-      if (key) {
-        const trimmedKey = key.trim();
-        const variable = uniqueVariables.get(trimmedKey);
-
-        if (variable) {
-          // Replace the line while preserving indentation
-          const indentation = line.match(/^\s*/)?.[0] || '';
-          return `${indentation}${trimmedKey}=${variable.value}`;
-        } else {
-          // If the variable doesn't exist in our map, keep the original line
+        // If it's a comment or empty line, keep it as is
+        if (!trimmedLine || trimmedLine.startsWith('#')) {
           return line;
         }
-      }
 
-      return line;
-    });
+        // If it's a variable line
+        const [key] = trimmedLine.split('=');
+        if (key) {
+          const trimmedKey = key.trim();
+          const variable = uniqueVariables.get(trimmedKey);
+
+          if (variable) {
+            // Replace the line while preserving indentation
+            const indentation = line.match(/^\s*/)?.[0] || '';
+            return `${indentation}${trimmedKey}=${variable.value}`;
+          } else {
+            // If the variable doesn't exist in our map, keep the original line
+            return line;
+          }
+        }
+
+        return line;
+      });
+    } else {
+      // If no example path, just write variables in a simple format
+      outputLines = Array.from(uniqueVariables.values()).map(
+        ({ key, value }) => `${key}=${value}`
+      );
+    }
 
     await fs.writeFile(absolutePath, outputLines.join('\n'), 'utf-8');
   } catch (error: unknown) {

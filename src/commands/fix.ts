@@ -79,6 +79,6 @@ export async function fix(options: FixOptions): Promise<void> {
   }
 
   // Always write the file to ensure proper formatting
-  await writeEnvFile(options.file, mergedFile.variables);
+  await writeEnvFile(options.file, mergedFile.variables, options.example);
   console.log(chalk.green('\n✓ Environment file updated successfully!'));
 }

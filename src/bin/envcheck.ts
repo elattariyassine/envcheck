@@ -25,6 +25,15 @@ program
   .description('Fix environment variables based on .env.example')
   .option('-y, --yes', 'Skip confirmation prompts', false)
   .option('-f, --force', 'Force overwrite existing values', false)
-  .action(fix);
+  .option('-p, --path <path>', 'Path to the .env file', '.env')
+  .option('-e, --example <path>', 'Path to the .env.example file')
+  .action(options => {
+    fix({
+      file: options.path,
+      example: options.example || options.path.replace('.env', '.env.example'),
+      interactive: !options.yes,
+      force: options.force,
+    });
+  });
 
 program.parse();

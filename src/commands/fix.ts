@@ -36,19 +36,29 @@ export async function fix(options: FixOptions): Promise<void> {
 
   if (result.isValid) {
     console.log(chalk.green('✓ All environment variables are valid!'));
-    return;
-  }
-
-  if (result.errors.length > 0) {
-    console.log(chalk.yellow('\nFixing missing or invalid variables...'));
+  } else {
+    console.log('\nFixing missing or invalid variables...');
 
     for (const error of result.errors) {
       if (error.type === 'missing' || error.type === 'type_mismatch') {
-        const variable = mergedFile.variables.find(v => v.key === error.key);
+        const variable =
+          error.type === 'missing'
+            ? exampleFile.variables.find(v => v.key === error.key)
+            : mergedFile.variables.find(v => v.key === error.key);
+
         if (variable) {
           if (options.interactive) {
             const value = await promptForValue(error.key, variable.description);
-            variable.value = value;
+            if (error.type === 'missing') {
+              mergedFile.variables.push({ ...variable, value });
+            } else {
+              const existingVar = mergedFile.variables.find(
+                v => v.key === error.key
+              );
+              if (existingVar) {
+                existingVar.value = value;
+              }
+            }
           } else {
             console.log(
               chalk.yellow(
@@ -59,15 +69,16 @@ export async function fix(options: FixOptions): Promise<void> {
         }
       }
     }
+
+    if (result.warnings.length > 0) {
+      console.log('\nWarnings:');
+      result.warnings.forEach(warning => {
+        console.log(chalk.yellow(`  ⚠ ${warning.message}`));
+      });
+    }
   }
 
-  if (result.warnings.length > 0) {
-    console.log(chalk.yellow('\nWarnings:'));
-    result.warnings.forEach(warning => {
-      console.log(chalk.yellow(`  ⚠ ${warning.message}`));
-    });
-  }
-
+  // Always write the file to ensure proper formatting
   await writeEnvFile(options.file, mergedFile.variables);
   console.log(chalk.green('\n✓ Environment file updated successfully!'));
 }

@@ -31,9 +31,11 @@ export interface CheckOptions {
 
 export interface FixOptions extends CheckOptions {
   interactive: boolean;
+  force?: boolean;
 }
 
 export interface EnvFile {
   path: string;
   variables: EnvVar[];
+  lines?: string[];
 }

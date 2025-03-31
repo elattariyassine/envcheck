@@ -24,14 +24,10 @@ export interface ValidationWarning {
   type: 'extra' | 'deprecated';
 }
 
-export interface CheckOptions {
+export interface FixOptions {
   file: string;
   example: string;
-}
-
-export interface FixOptions extends CheckOptions {
   interactive: boolean;
-  force?: boolean;
 }
 
 export interface EnvFile {

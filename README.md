@@ -17,6 +17,9 @@
 - 📝 Support for different variable types (string, number, boolean)
 - 🎨 Colorized output for better readability
 - 🔒 Secure handling of sensitive information
+- 🔄 Custom file paths for `.env` and `.env.example`
+- 📊 Detailed validation reports
+- 📋 Preserves file formatting and comments when updating files
 
 ## Installation
 
@@ -57,6 +60,7 @@ This command will:
 1. Create a new `.env.example` file with common environment variables
 2. Include examples for different types of variables (string, number, boolean)
 3. Add helpful comments for each section
+4. Maintain proper formatting and structure
 
 ### Validate Environment Variables
 
@@ -70,6 +74,7 @@ This command will:
 2. Validate all required variables
 3. Check variable types and formats
 4. Display any errors or warnings
+5. Preserve all existing comments and formatting
 
 ### Fix Environment Variables
 
@@ -82,15 +87,20 @@ This command will:
 1. Check for missing or invalid variables
 2. Prompt you to enter values for missing variables (in interactive mode)
 3. Update your `.env` file with the new values
+4. Maintain all existing comments, section headers, and formatting
+5. Keep the file structure clean and organized
 
 ### Command Options
 
 ```bash
-# Skip confirmation prompts
-npx envcheck fix --yes
+# Show version
+npx envcheck -V
+npx envcheck --version
 
-# Force overwrite existing values
-npx envcheck fix --force
+# Fix command options
+npx envcheck fix --file custom.env           # Use custom .env file
+npx envcheck fix --example custom.example    # Use custom .env.example file
+npx envcheck fix --no-interactive           # Disable interactive mode
 
 # Show help for any command
 npx envcheck --help

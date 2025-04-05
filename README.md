@@ -6,10 +6,9 @@
 [![Build Status][build-img]][build-url]
 [![Downloads][downloads-img]][downloads-url]
 [![Issues][issues-img]][issues-url]
-[![Code Coverage][codecov-img]][codecov-url]
 [![Semantic Release][semantic-release-img]][semantic-release-url]
 
-> A CLI tool that validates environment variables against `.env.example` and helps fix any issues.
+> A powerful Node.js CLI tool for validating, managing, and fixing environment variables in your projects. Automatically detects missing or invalid variables, provides interactive fixes, and ensures your .env files match your .env.example templates. Built with TypeScript for type safety and reliability.
 
 ## Features
 
@@ -271,7 +270,5 @@ ISC
 [npm-url]: https://www.npmjs.com/package/@elattariyassine/envcheck
 [issues-img]: https://img.shields.io/github/issues/elattariyassine/envcheck
 [issues-url]: https://github.com/elattariyassine/envcheck/issues
-[codecov-img]: https://codecov.io/gh/elattariyassine/envcheck/branch/main/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/elattariyassine/envcheck
 [semantic-release-img]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-release-url]: https://github.com/semantic-release/semantic-release

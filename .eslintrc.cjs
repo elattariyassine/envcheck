@@ -40,4 +40,12 @@ module.exports = {
     'node/no-extraneous-import': 'off',
     '@typescript-eslint/no-unnecessary-type-assertion': 'off'
   },
+  overrides: [
+    {
+      files: ['*.test.ts', 'jest.setup.ts'],
+      rules: {
+        '@typescript-eslint/no-namespace': 'off'
+      }
+    }
+  ]
 };

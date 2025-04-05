@@ -4,7 +4,6 @@
   "description": "A powerful Node.js CLI tool for validating, managing, and fixing environment variables",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "type": "module",
   "bin": {
     "envcheck": "./lib/bin/envcheck.js"
   },

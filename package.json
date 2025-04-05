@@ -11,7 +11,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "mkdir -p lib/bin && tsc -p tsconfig.build.json && mv lib/src/bin/envcheck.js lib/bin/ && chmod +x lib/bin/envcheck.js",
+    "build": "mkdir -p lib/bin && tsc -p tsconfig.build.json && mv lib/src/bin/envcheck.js lib/bin/ && chmod +x lib/bin/envcheck.js && cp -r lib/src/* lib/ && rm -rf lib/src",
     "test": "jest",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write \"src/**/*.ts\"",

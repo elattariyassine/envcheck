@@ -3,9 +3,14 @@
 import { program } from 'commander';
 import { init, validate, fix } from '../index';
 import chalk from 'chalk';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 // Get version from package.json
-const version = require('../../package.json').version;
+const packageJson = JSON.parse(
+  readFileSync(join(__dirname, '../../package.json'), 'utf8')
+);
+const version = packageJson.version;
 
 program
   .name('envcheck')

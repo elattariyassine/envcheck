@@ -1,11 +1,14 @@
 {
   "name": "@elattariyassine/envcheck",
   "version": "1.0.0",
-  "description": "A CLI tool to validate environment variables",
+  "description": "A powerful Node.js CLI tool for validating, managing, and fixing environment variables",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "bin": {
     "envcheck": "./lib/bin/envcheck.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json && chmod +x lib/bin/envcheck.js",

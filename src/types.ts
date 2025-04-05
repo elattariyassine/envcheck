@@ -28,6 +28,7 @@ export interface FixOptions {
   file: string;
   example: string;
   interactive: boolean;
+  force?: boolean;
 }
 
 export interface EnvFile {

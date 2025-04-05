@@ -1,5 +1,5 @@
 {
-  "name": "envcheck",
+  "name": "@elattariyassine/envcheck",
   "version": "1.0.0",
   "description": "A CLI tool to validate environment variables",
   "main": "lib/index.js",
@@ -11,17 +11,34 @@
     "build": "tsc -p tsconfig.build.json && chmod +x lib/bin/envcheck.js",
     "test": "jest",
     "lint": "eslint . --ext .ts",
-    "format": "prettier --write \"src/**/*.ts\""
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepare": "npm run build"
   },
   "keywords": [
     "cli",
     "env",
     "validation",
-    "typescript"
+    "typescript",
+    "environment-variables",
+    "dotenv",
+    "configuration"
   ],
-  "author": "",
+  "author": {
+    "name": "Yassine El attari",
+    "email": "yassineattari64@gmail.com",
+    "url": "https://github.com/elattariyassine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elattariyassine/envcheck.git"
+  },
+  "bugs": {
+    "url": "https://github.com/elattariyassine/envcheck/issues"
+  },
+  "homepage": "https://github.com/elattariyassine/envcheck#readme",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^4.1.2",
     "commander": "^11.1.0",
     "fs-extra": "^11.2.0",
     "inquirer": "^8.2.6"

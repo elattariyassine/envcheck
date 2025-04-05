@@ -1,7 +1,5 @@
 import { Command } from 'commander';
-import { init } from '../commands/init';
-import { validate } from '../commands/validate';
-import { fix } from '../commands/fix';
+import { init, validate, fix } from '../index';
 
 // Mock the command modules
 jest.mock('../commands/init');

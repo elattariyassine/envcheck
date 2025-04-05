@@ -1,39 +1,71 @@
 #!/usr/bin/env node
 
 import { program } from 'commander';
-import { init } from '../commands/init';
-import { validate } from '../commands/validate';
-import { fix } from '../commands/fix';
+import { init, validate, fix } from '../index';
+import chalk from 'chalk';
+
+// Get version from package.json
+const version = require('../../package.json').version;
 
 program
   .name('envcheck')
   .description('A CLI tool to validate environment variables')
-  .version('1.0.0');
+  .version(version);
 
 program
   .command('init')
   .description('Initialize a new .env.example file')
-  .action(init);
+  .action(async () => {
+    try {
+      await init();
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(chalk.red('Error:'), error.message);
+      } else {
+        console.error(chalk.red('Error:'), 'An unknown error occurred');
+      }
+      throw error;
+    }
+  });
 
 program
   .command('validate')
   .description('Validate environment variables against .env.example')
-  .action(validate);
+  .action(() => {
+    try {
+      validate();
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(chalk.red('Error:'), error.message);
+      } else {
+        console.error(chalk.red('Error:'), 'An unknown error occurred');
+      }
+      throw error;
+    }
+  });
 
 program
   .command('fix')
   .description('Fix environment variables based on .env.example')
-  .option('-y, --yes', 'Skip confirmation prompts', false)
-  .option('-f, --force', 'Force overwrite existing values', false)
-  .option('-p, --path <path>', 'Path to the .env file', '.env')
-  .option('-e, --example <path>', 'Path to the .env.example file')
-  .action(options => {
-    fix({
-      file: options.path,
-      example: options.example || '.env.example',
-      interactive: !options.yes,
-      force: options.force,
-    });
+  .option('-f, --file <path>', 'Path to .env file', '.env')
+  .option('-e, --example <path>', 'Path to .env.example file', '.env.example')
+  .option(
+    '-i, --interactive',
+    'Enable interactive mode for fixing variables',
+    true
+  )
+  .option('--no-interactive', 'Disable interactive mode for fixing variables')
+  .action(async options => {
+    try {
+      await fix(options);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(chalk.red('Error:'), error.message);
+      } else {
+        console.error(chalk.red('Error:'), 'An unknown error occurred');
+      }
+      throw error;
+    }
   });
 
 program.parse();

@@ -1,11 +1,12 @@
-# EnvCheck
+# envcheck
+
+![Alt text](envcheck.png)
 
 [![npm package][npm-img]][npm-url]
 [![Build Status][build-img]][build-url]
 [![Downloads][downloads-img]][downloads-url]
 [![Issues][issues-img]][issues-url]
 [![Code Coverage][codecov-img]][codecov-url]
-[![Commitizen Friendly][commitizen-img]][commitizen-url]
 [![Semantic Release][semantic-release-img]][semantic-release-url]
 
 > A CLI tool that validates environment variables against `.env.example` and helps fix any issues.
@@ -28,15 +29,15 @@ You can use EnvCheck in two ways:
 ### 1. Using npx (Recommended for one-time use)
 
 ```bash
-npx envcheck init
-npx envcheck validate
-npx envcheck fix
+npx @elattariyassine/envcheck init
+npx @elattariyassine/envcheck validate
+npx @elattariyassine/envcheck fix
 ```
 
 ### 2. Global Installation
 
 ```bash
-npm install -g envcheck
+npm install -g @elattariyassine/envcheck
 ```
 
 After global installation, you can use the commands directly:
@@ -47,12 +48,63 @@ envcheck validate
 envcheck fix
 ```
 
+## Local Development Setup
+
+To set up the project locally for development:
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/elattariyassine/envcheck.git
+cd envcheck
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Build the project:
+
+```bash
+npm run build
+```
+
+4. Link the package locally for testing:
+
+```bash
+npm link
+```
+
+Now you can use `envcheck` commands globally while developing.
+
+### Available Scripts
+
+- `npm run build` - Compiles TypeScript code to JavaScript
+- `npm test` - Runs Jest tests
+- `npm run lint` - Runs ESLint to check code quality
+- `npm run format` - Formats code using Prettier
+
+### Development Workflow
+
+1. Make your changes in the `src` directory
+2. Run tests to ensure everything works: `npm test`
+3. Build the project: `npm run build`
+4. Test your changes using the CLI commands
+
+To unlink the package when you're done:
+
+```bash
+npm unlink
+```
+
 ## Usage
 
 ### Initialize Environment Files
 
 ```bash
-npx envcheck init
+npx @elattariyassine/envcheck init
 ```
 
 This command will:
@@ -65,7 +117,7 @@ This command will:
 ### Validate Environment Variables
 
 ```bash
-npx envcheck validate
+npx @elattariyassine/envcheck validate
 ```
 
 This command will:
@@ -79,7 +131,7 @@ This command will:
 ### Fix Environment Variables
 
 ```bash
-npx envcheck fix
+npx @elattariyassine/envcheck fix
 ```
 
 This command will:
@@ -94,18 +146,18 @@ This command will:
 
 ```bash
 # Show version
-npx envcheck -V
-npx envcheck --version
+npx @elattariyassine/envcheck -V
+npx @elattariyassine/envcheck --version
 
 # Fix command options
-npx envcheck fix --file custom.env           # Use custom .env file
-npx envcheck fix --example custom.example    # Use custom .env.example file
-npx envcheck fix --no-interactive           # Disable interactive mode
+npx @elattariyassine/envcheck fix --file custom.env           # Use custom .env file
+npx @elattariyassine/envcheck fix --example custom.example    # Use custom .env.example file
+npx @elattariyassine/envcheck fix --no-interactive           # Disable interactive mode
 
 # Show help for any command
-npx envcheck --help
-npx envcheck validate --help
-npx envcheck fix --help
+npx @elattariyassine/envcheck --help
+npx @elattariyassine/envcheck validate --help
+npx @elattariyassine/envcheck fix --help
 ```
 
 ## Example Files
@@ -192,21 +244,34 @@ SESSION_TIMEOUT=3600
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+## TODO
+
+- [x] Create basic CLI structure
+- [x] Implement environment variable validation
+- [x] Add interactive mode for fixing variables
+- [x] Add support for different variable types
+- [x] Implement file formatting preservation
+- [x] Add GitHub Actions workflows
+- [x] Set up semantic-release
+- [x] Add comprehensive tests
+- [x] Add version command
+- [x] Update license to ISC
+- [x] Update package name to be scoped
+- [ ] Add usage examples in README
+
 ## License
 
 ISC
 
 [build-img]: https://github.com/elattariyassine/envcheck/actions/workflows/release.yml/badge.svg
 [build-url]: https://github.com/elattariyassine/envcheck/actions/workflows/release.yml
-[downloads-img]: https://img.shields.io/npm/dt/envcheck
-[downloads-url]: https://www.npmtrends.com/envcheck
-[npm-img]: https://img.shields.io/npm/v/envcheck
-[npm-url]: https://www.npmjs.com/package/envcheck
+[downloads-img]: https://img.shields.io/npm/dt/@elattariyassine/envcheck
+[downloads-url]: https://www.npmtrends.com/@elattariyassine/envcheck
+[npm-img]: https://img.shields.io/npm/v/@elattariyassine/envcheck
+[npm-url]: https://www.npmjs.com/package/@elattariyassine/envcheck
 [issues-img]: https://img.shields.io/github/issues/elattariyassine/envcheck
 [issues-url]: https://github.com/elattariyassine/envcheck/issues
 [codecov-img]: https://codecov.io/gh/elattariyassine/envcheck/branch/main/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/elattariyassine/envcheck
 [semantic-release-img]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-release-url]: https://github.com/semantic-release/semantic-release
-[commitizen-img]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
-[commitizen-url]: http://commitizen.github.io/cz-cli/

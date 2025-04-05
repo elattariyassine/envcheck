@@ -1,12 +1,9 @@
-import Ajv from 'ajv';
 import {
   EnvVar,
   ValidationResult,
   ValidationError,
   ValidationWarning,
 } from './types';
-
-const ajv = new Ajv({ allErrors: true });
 
 const typeValidators = {
   string: (value: string) => typeof value === 'string',

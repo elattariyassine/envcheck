@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 import { prompt, QuestionCollection } from 'inquirer';
 
 interface InitAnswers {

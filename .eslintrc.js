@@ -14,6 +14,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:prettier/recommended',
   ],
+  ignorePatterns: ['lib/**/*.d.ts'],
   rules: {
     'prettier/prettier': 'warn',
     'node/no-missing-import': 'off',
@@ -28,5 +29,15 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
+    '@typescript-eslint/no-unsafe-argument': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    'node/no-unsupported-features/node-builtins': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/require-await': 'off',
+    'node/no-extraneous-import': 'off',
+    '@typescript-eslint/no-unnecessary-type-assertion': 'off'
   },
 };

@@ -1,13 +1,5 @@
 import fs from 'fs';
-import path from 'path';
 import { parse } from 'dotenv';
-
-interface EnvVar {
-  name: string;
-  value: string;
-  required: boolean;
-  type: string;
-}
 
 export function validate(): void {
   const envPath = '.env';
@@ -31,7 +23,7 @@ export function validate(): void {
   const warnings: string[] = [];
 
   // Check for missing required variables
-  for (const [name, value] of Object.entries(exampleVars)) {
+  for (const [name] of Object.entries(exampleVars)) {
     if (!(name in envVars)) {
       errors.push(`Missing required variable: ${name}`);
     }
@@ -63,11 +55,12 @@ export function validate(): void {
 
       // Check for URL values
       if (
-        exampleValue.startsWith('http://') ||
-        exampleValue.startsWith('https://')
+        typeof exampleValue === 'string' &&
+        (exampleValue.startsWith('http://') ||
+          exampleValue.startsWith('https://'))
       ) {
         try {
-          new URL(value);
+          new URL(value as string);
         } catch {
           errors.push(`Invalid URL value for ${name}: ${value}`);
         }

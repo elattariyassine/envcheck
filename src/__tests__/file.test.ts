@@ -19,21 +19,20 @@ ENABLE_CACHE=true
 DEBUG_MODE=false`;
 
   const mockVariables: EnvVar[] = [
-    { key: 'DB_HOST', value: 'localhost', type: 'string', required: true },
-    { key: 'DB_PORT', value: '5432', type: 'number', required: true },
-    { key: 'DB_NAME', value: 'myapp', type: 'string', required: true },
-    { key: 'DB_USER', value: 'postgres', type: 'string', required: true },
-    { key: 'DB_PASSWORD', value: 'secret123', type: 'string', required: true },
+    { key: 'DB_HOST', value: 'localhost', required: true },
+    { key: 'DB_PORT', value: '5432', required: true },
+    { key: 'DB_NAME', value: 'myapp', required: true },
+    { key: 'DB_USER', value: 'postgres', required: true },
+    { key: 'DB_PASSWORD', value: 'secret123', required: true },
     {
       key: 'API_URL',
       value: 'https://api.example.com',
-      type: 'string',
       required: true,
     },
-    { key: 'API_KEY', value: 'abc123', type: 'string', required: true },
-    { key: 'API_TIMEOUT', value: '5000', type: 'number', required: true },
-    { key: 'ENABLE_CACHE', value: 'true', type: 'boolean', required: true },
-    { key: 'DEBUG_MODE', value: 'false', type: 'boolean', required: true },
+    { key: 'API_KEY', value: 'abc123', required: true },
+    { key: 'API_TIMEOUT', value: '5000', required: true },
+    { key: 'ENABLE_CACHE', value: 'true', required: true },
+    { key: 'DEBUG_MODE', value: 'false', required: true },
   ];
 
   beforeEach(() => {
@@ -47,7 +46,7 @@ DEBUG_MODE=false`;
       const result = await readEnvFile('.env');
       expect(result).toMatchObject({
         path: '.env',
-        variables: mockVariables.map(({ type, ...rest }) => rest),
+        variables: mockVariables.map(({ ...rest }) => rest),
       });
       expect(result.lines).toEqual(mockEnvContent.split('\n'));
       expect(mockedFs.pathExists).toHaveBeenCalledWith(

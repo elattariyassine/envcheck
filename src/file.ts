@@ -69,7 +69,7 @@ export async function writeEnvFile(
       const exampleLines = exampleContent.split('\n');
 
       // Build the output content by following the example file's structure exactly
-      outputLines = exampleLines.map((line, index) => {
+      outputLines = exampleLines.map(line => {
         const trimmedLine = line.trim();
 
         // If it's a comment or empty line, keep it as is

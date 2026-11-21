@@ -1,6 +1,6 @@
 # envcheck
 
-![Alt text](envcheck.png)
+![envcheck validating a .env file against .env.example](envcheck.png)
 
 [![npm package][npm-img]][npm-url]
 [![Build Status][build-img]][build-url]
@@ -8,18 +8,16 @@
 [![Issues][issues-img]][issues-url]
 [![Semantic Release][semantic-release-img]][semantic-release-url]
 
-> A powerful Node.js CLI tool for validating, managing, and fixing environment variables in your projects. Automatically detects missing or invalid variables, provides interactive fixes, and ensures your .env files match your .env.example templates. Built with TypeScript for type safety and reliability.
+A CLI that keeps your `.env` file in sync with `.env.example`. It reports missing or invalid variables and can fix them interactively, without touching your existing formatting or comments.
 
 ## Features
 
-- 🔍 Validate environment variables against `.env.example`
-- 🛠️ Interactive mode to fix missing or invalid variables
-- 📝 Support for different variable types (string, number, boolean)
-- 🎨 Colorized output for better readability
-- 🔒 Secure handling of sensitive information
-- 🔄 Custom file paths for `.env` and `.env.example`
-- 📊 Detailed validation reports
-- 📋 Preserves file formatting and comments when updating files
+- Validates `.env` against `.env.example`
+- Interactive mode to fill in missing or invalid variables
+- Type checks for string, number and boolean values
+- Preserves formatting and comments when updating files
+- Custom paths for `.env` and `.env.example`
+- Clear, colorized validation reports
 
 ## Installation
 
